@@ -1,0 +1,57 @@
+<div class="container mt-4">
+    <h2 class="text-center title">User and Claim Details</h2>
+
+    <!-- User ID Input -->
+    <div class="search-box">
+        <label for="userId" class="form-label">Enter User ID:</label>
+        <input type="number" [(ngModel)]="userId" class="form-control input-box" placeholder="Enter User ID"><br><br>
+        <button class="btn btn-fetch" (click)="getUserDetails()">Fetch Details</button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger error-box">
+        {{ errorMessage }}
+    </div>
+
+    <!-- User Details -->
+    <div *ngIf="user" class="details-box">
+        <h3>User Details</h3>
+        <table class="styled-table">
+            <tr><th>User ID</th><td>{{ user.id }}</td></tr>
+            <tr><th>Name</th><td>{{ user.name }}</td></tr>
+            <tr><th>Email</th><td>{{ user.email }}</td></tr>
+            <tr><th>Phone</th><td>{{ user.phone }}</td></tr>
+            <tr><th>Address</th><td>{{ user.address }}</td></tr>
+        </table>
+    </div>
+
+    <!-- Claim Details Table -->
+    <div *ngIf="claims.length > 0" class="details-box">
+        <h3>Claim Details</h3>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Claim Number</th>
+                    <th>Claim Status</th>
+                    <th>Claim Amount</th>
+                    <th>Claim Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let claim of claims">
+                    <td>{{ claim.id }}</td>
+                    <td>{{ claim.claimNumber }}</td>
+                    <td>{{ claim.claimStatus }}</td>
+                    <td>{{ claim.claimAmount }}</td>
+                    <td>{{ claim.claimDate | date: 'yyyy-MM-dd' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No Claims Message -->
+    <div *ngIf="user && claims.length === 0" class="alert alert-warning">
+        No claims found for this user.
+    </div>
+</div>
