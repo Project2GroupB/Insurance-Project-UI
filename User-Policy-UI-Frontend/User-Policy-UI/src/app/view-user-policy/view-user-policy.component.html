@@ -1,0 +1,104 @@
+<div class="container my-4">
+  <div class="text-center mb-3">
+    <h4 class="text-primary">Find User Policy Details</h4>
+    <p class="text-muted">Enter a User ID to search for their policy information.</p>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <input
+      type="text"
+      placeholder="Search by User ID"
+      class="form-control w-50 me-2"
+      #id
+      aria-label="Search by User ID"
+    />
+    <button
+      type="button"
+      name="Search"
+      class="btn btn-warning"
+      (click)="getUserPolicyById(id.value)"
+      aria-label="Search user policy by User ID"
+      *ngIf="searchBar == ''"
+    >
+      Search
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="id.value = ''; searchBar = '';"
+      aria-label="Clear search field"
+      *ngIf="id.value"
+    >
+      Clear
+    </button>
+    
+  </div>
+  <div class="text-center mt-3">
+    <small class="text-info">Example User ID: 12345</small>
+  </div>
+</div>
+
+
+<div class="container my-4 p-3 border rounded shadow-sm" id="custom-container" *ngIf="details !== 'hidden'">
+  <h3 class="text-center mb-4 text-primary">User Details</h3>
+  <div *ngIf="user; else noUser">
+    <table class="table table-striped table-bordered" id="table">
+      <tr>
+        <th class="text-center bg-light" id="th">User ID</th>
+        <td class="text-center">{{ user?.userId }}</td>
+      </tr>
+      <tr>
+        <th class="text-center bg-light" id="th">First Name</th>
+        <td class="text-center">{{ user?.firstName }}</td>
+      </tr>
+      <tr>
+        <th class="text-center bg-light" id="th">Last Name</th>
+        <td class="text-center">{{ user?.lastName }}</td>
+      </tr>
+      <tr>
+        <th class="text-center bg-light" id="th">Email</th>
+        <td class="text-center">{{ user?.email }}</td>
+      </tr>
+      <tr>
+        <th class="text-center bg-light" id="th">Mobile Number</th>
+        <td class="text-center">{{ user?.mobileNo }}</td>
+      </tr>
+    </table>
+  </div>
+  <ng-template #noUser>
+    <p class="text-center text-danger">No user found. Please search with a valid User ID.</p>
+  </ng-template>
+</div>
+
+<div class="container my-4 p-3 border rounded shadow-sm" id="policy-con" *ngIf="details !== 'hidden'">
+  <h3 class="text-center mb-4 text-success">Policy Details</h3>
+  <div *ngIf="policy && policy.length > 0; else noPolicies">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="text-center">Policy ID</th>
+            <th scope="col" class="text-center">Policy Serial Number</th>
+            <th scope="col" class="text-center">Policy Name</th>
+            <th scope="col" class="text-center">Policy Status</th>
+            <th scope="col" class="text-center">Policy Term</th>
+            <th scope="col" class="text-center">Policy Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let policyItem of policy">
+            <th scope="row" class="text-center">{{ policyItem.policyId }}</th>
+            <td class="text-center">{{ policyItem.policySerialNo }}</td>
+            <td class="text-center">{{ policyItem.policyName }}</td>
+            <td class="text-center">{{ policyItem.policyStatus }}</td>
+            <td class="text-center">{{ policyItem.policyTerm }}</td>
+            <td class="text-center">{{ policyItem.policyCoverage }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ng-template #noPolicies>
+    <p class="text-center text-danger">No policies found for this user.</p>
+  </ng-template>
+</div>

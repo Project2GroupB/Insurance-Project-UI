@@ -1,0 +1,46 @@
+#td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#custom-container{
+    background-color: lightgrey;
+    border: black 2px solid ;   
+}
+
+#table{
+    background-color: whitesmoke;
+    border: 1px solid black;
+    border-collapse: collapse;
+    
+    
+}
+
+#th{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+  
+#policy-con{
+    background-color: lightsteelblue;
+    border: black 2px solid ;   
+}
+
+
+/* Style the search input */
+input[type="text"] {
+    border-radius: 25px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Style the Search and Clear buttons */
+button {
+    border-radius: 25px;
+    padding: 8px 15px;
+}
+
+/* Add margin between the buttons */
+button + button {
+    margin-left: 10px;
+}
+

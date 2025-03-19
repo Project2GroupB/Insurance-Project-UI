@@ -20,52 +20,28 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+	@Override
+	public User getUserById(Long userId) {
+		logger.info("User deatails fetching...");
+		return userRepository.findById(userId)
+				.orElseThrow(() -> {
+					logger.warn("User not found with ID : " + userId);
+					return new ResourceNotFoundException("");
+				});
+	}
 
-    /*
-     *  Add new user.
-     * @param user User object to save
-     * @return Saved user
-     */
-    @Override
-    public User addUser(User user) {
-        logger.info("Adding new user: {}", user);
-        User savedUser = userRepository.save(user);
-        logger.info("User added successfully with ID: {}", savedUser.getId());
-        return savedUser;
-    }
+	@Override
+	public List<User> getAllUsers() {
+		logger.info("All user deatils fetching...");
+		List<User> users = userRepository.findAll();
+		if(users.isEmpty()) {
+			logger.warn("No user found !!");
+		}else {
+			logger.info("Users fetched user count is : " + users.size());
+		}
+		
+		return users;
+	}
 
-    /*
-     *  Get user details by ID.
-     * @param userId The user ID
-     * @return User details
-     * @throws ResourceNotFoundException if user is not found
-     */
-    @Override
-    public User getUserById(Long userId) {
-        logger.info("Fetching user details for ID: {}", userId);
-
-        return userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    logger.warn("User not found with ID: {}", userId);
-                    return new ResourceNotFoundException("User not found with ID: " + userId);
-                });
-    }
-
-    /*
-     *  Get all users.
-     * @return List of users
-     */
-    @Override
-    public List<User> getAllUsers() {
-        logger.info("Fetching all users");
-        List<User> users = userRepository.findAll();
-        
-        if (users.isEmpty()) {
-            logger.warn("No users found in the database.");
-        } else {
-            logger.info("Total users found: {}", users.size());
-        }
-
-        return users;
-    }
 }

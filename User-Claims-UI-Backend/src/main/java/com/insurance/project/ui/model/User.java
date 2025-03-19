@@ -9,122 +9,90 @@ import jakarta.persistence.*;
 @Entity // Marks this class as a JPA entity for ORM (Object-Relational Mapping)
 @Table(name = "users") // Specifies the table name in the database
 public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userId;
+	
+	@Column(nullable = false)
+	private String firstName;
+	
+	private String lastName;
+	
+	@Column(unique = true, nullable = false)
+	private String email;
+	
+	@Column(nullable = false)
+	private String mobileNo;
 
-    @Id // Marks this field as the primary key
-    @GeneratedValue(strategy = GenerationType.AUTO) // Automatically generates unique values for user ID
-    private Long id;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Policy> policies;
 
-    @Column(nullable = false) // Ensures name cannot be null
-    private String name;
+	
+	public User( ) {}
 
-    @Column(unique = true, nullable = false) // Ensures email is unique and cannot be null
-    private String email;
+	public User(Long userId, String firstName, String lastName, String email, String mobileNo, List<Policy> policies) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.mobileNo = mobileNo;
+		this.policies = policies;
+	}
 
-    private String phone; // Stores the user's phone number
-    private String address; // Stores the user's address
+	public Long getUserId() {
+		return userId;
+	}
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) 
-    /*
-     * Establishes a one-to-many relationship with the Claim entity.
-     * "mappedBy = 'user'" indicates that the 'user' field in the Claim entity owns the relationship.
-     * "cascade = CascadeType.ALL" ensures that any operation (persist, remove, update) on the User 
-     * will be cascaded to its associated Claims.
-     */
-    private List<Claim> claims;
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    /*
-     * Default Constructor - Required for JPA
-     */
-    public User() {}
+	public String getFirstName() {
+		return firstName;
+	}
 
-    /*
-     * Parameterized Constructor - Used to create a User instance with specific values.
-     *
-     * @param name    User's full name.
-     * @param email   User's email address (must be unique).
-     * @param phone   User's phone number.
-     * @param address User's residential address.
-     * @param claims  List of claims associated with the user.
-     */
-    public User(String name, String email, String phone, String address, List<Claim> claims) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.claims = claims;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    // Getters and Setters
+	public String getLastName() {
+		return lastName;
+	}
 
-    /*
-     * Gets the ID of the user.
-     * @return user ID
-     */
-    public Long getId() { return id; }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    /*
-     * Sets the ID of the user.
-     * @param id user ID
-     */
-    public void setId(Long id) { this.id = id; }
+	public String getEmail() {
+		return email;
+	}
 
-    /*
-     * Gets the user's name.
-     * @return user name
-     */
-    public String getName() { return name; }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    /*
-     * Sets the user's name.
-     * @param name user name
-     */
-    public void setName(String name) { this.name = name; }
+	public String getMobileNo() {
+		return mobileNo;
+	}
 
-    /*
-     * Gets the user's email.
-     * @return user email
-     */
-    public String getEmail() { return email; }
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
 
-    /*
-     * Sets the user's email.
-     * @param email user email
-     */
-    public void setEmail(String email) { this.email = email; }
+	public List<Policy> getPolicy() {
+		return policies;
+	}
 
-    /*
-     * Gets the user's phone number.
-     * @return user phone number
-     */
-    public String getPhone() { return phone; }
-
-    /*
-     * Sets the user's phone number.
-     * @param phone user phone number
-     */
-    public void setPhone(String phone) { this.phone = phone; }
-
-    /*
-     * Gets the user's address.
-     * @return user address
-     */
-    public String getAddress() { return address; }
-
-    /*
-     * Sets the user's address.
-     * @param address user address
-     */
-    public void setAddress(String address) { this.address = address; }
-
-    /*
-     * Gets the list of claims associated with the user.
-     * @return list of claims
-     */
-    public List<Claim> getClaims() { return claims; }
-
-    /*
-     * Sets the list of claims associated with the user.
-     * @param claims list of claims
-     */
-    public void setClaims(List<Claim> claims) { this.claims = claims; }
+	public void setPolicy(List<Policy> policies) {
+		this.policies = policies;
+	};
+	
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", mobileNo=" + mobileNo + ", policies=" + policies + "]";
+	}
+	
 }
